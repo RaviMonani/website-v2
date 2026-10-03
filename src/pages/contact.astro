@@ -1,0 +1,215 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { CALENDLY_URL, contact } from "../data/resume";
+
+const hasCalendly = CALENDLY_URL.trim().length > 0;
+
+const topics = [
+  "Breaking into processor architecture & validation",
+  "Hardware security and microcode",
+  "Research in low-power IC design & cryptography",
+  "Graduate school, publishing, and IEEE involvement",
+  "Career growth in system design engineering",
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Ravi Monani or book a free mentorship session on processor design, hardware security, validation, and research careers."
+>
+  <PageHeader
+    eyebrow="Contact"
+    title="Get in touch"
+    lead="Reach out directly, or book a free mentorship session at a time that works for you - no cost, just a genuine conversation."
+  />
+
+  <div class="contact-grid">
+    <aside class="contact-info">
+      <div class="contact-block">
+        <h2>Reach me</h2>
+        <ul class="contact-links">
+          <li>
+            <span class="contact-label">Email</span>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </li>
+          <li>
+            <span class="contact-label">LinkedIn</span>
+            <a href={contact.linkedin} target="_blank" rel="noopener">Connect on LinkedIn</a>
+          </li>
+          <li>
+            <span class="contact-label">Google Scholar</span>
+            <a href={contact.googleScholar} target="_blank" rel="noopener">View profile</a>
+          </li>
+          <li>
+            <span class="contact-label">Location</span>
+            <span>{contact.location}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-block">
+        <h3>Free mentorship - topics</h3>
+        <ul class="topic-list">
+          {topics.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+    </aside>
+
+    <div class="booking-panel">
+      {
+        hasCalendly ? (
+          <div
+            class="calendly-inline-widget"
+            data-url={CALENDLY_URL}
+            style="min-width:320px;height:720px;"
+          />
+        ) : (
+          <div class="booking-fallback">
+            <span class="eyebrow">Scheduling</span>
+            <h2>Booking opens soon</h2>
+            <p class="text-muted">
+              The online scheduler is being set up. In the meantime, email me and we'll find a time
+              that works.
+            </p>
+            <a
+              class="btn btn-primary"
+              href={`mailto:${contact.email}?subject=Mentorship%20session%20request`}
+            >
+              Request a session by email
+            </a>
+            <p class="fallback-hint text-muted">
+              Owner note: paste your Calendly link into <code>CALENDLY_URL</code> in
+              <code>src/data/resume.ts</code> to activate the live calendar here.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    hasCalendly && (
+      <script is:inline src="https://assets.calendly.com/assets/external/widget.js" async />
+    )
+  }
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .contact-block {
+    padding: 1.6rem;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .contact-block h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1.1rem;
+  }
+  .contact-block h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .contact-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .contact-links li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .contact-label {
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .topic-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .topic-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.96rem;
+    line-height: 1.45;
+  }
+  .topic-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    transform: rotate(45deg);
+    background: var(--accent);
+  }
+
+  .booking-panel {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    min-height: 460px;
+  }
+  .booking-fallback {
+    padding: clamp(2rem, 4vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    height: 100%;
+    justify-content: center;
+  }
+  .booking-fallback h2 {
+    font-size: 1.5rem;
+  }
+  .booking-fallback p {
+    margin-bottom: 0.75rem;
+    max-width: 44ch;
+  }
+  .booking-fallback .btn {
+    margin-top: 0.5rem;
+  }
+  .fallback-hint {
+    margin-top: 1.5rem;
+    font-size: 0.82rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--line);
+  }
+  .fallback-hint code {
+    background: #eef0ec;
+    padding: 0.1rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.85em;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

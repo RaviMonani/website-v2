@@ -1,0 +1,118 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/resume";
+import projectsVisual from "../assets/soft-projects-visual.png";
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected engineering projects by Ravi Monani - validation automation, microcode deployment, analytics, ML triage, and hardware security research."
+>
+  <section class="section page-hero breakout">
+    <div class="breakout-inner page-hero-grid">
+      <div class="page-hero-text">
+        <span class="eyebrow">Projects</span>
+        <h1>Work that moved the needle</h1>
+        <p class="lead">
+          A selection of platforms, methodologies, and research - each described by the impact
+          it delivered.
+        </p>
+      </div>
+      <div class="page-hero-visual reveal">
+        <Image
+          src={projectsVisual}
+          alt=""
+          widths={[480, 760, 1040]}
+          sizes="(max-width: 860px) 90vw, 540px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <div class="proj-grid section">
+    {
+      projects.map((p) => (
+        <article class="proj-card reveal">
+          <div class="proj-top">
+            <span class="chip">{p.category}</span>
+          </div>
+          <h2>{p.title}</h2>
+          <p class="text-muted proj-desc">{p.description}</p>
+          <ul class="impact-list">
+            {p.impact.map((i) => <li>{i}</li>)}
+          </ul>
+          <div class="chip-row proj-tags">
+            {p.tags.map((t) => <span class="chip chip-neutral">{t}</span>)}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .proj-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  }
+  .proj-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-soft);
+  }
+  .proj-card h2 {
+    font-size: 1.25rem;
+    margin-top: 0.85rem;
+  }
+  .proj-desc {
+    margin-top: 0.6rem;
+    font-size: 0.96rem;
+  }
+  .impact-list {
+    list-style: none;
+    margin: 1.1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .impact-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .impact-list li::before {
+    content: "\2713";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .proj-tags {
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 720px) {
+    .proj-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

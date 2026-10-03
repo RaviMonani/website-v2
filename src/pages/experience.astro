@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { experience } from "../data/resume";
+---
+
+<BaseLayout
+  title="Experience"
+  description="Professional experience of Ravi Monani across processor design, hardware security, AI accelerators, and validation."
+>
+  <PageHeader
+    eyebrow="Experience"
+    title="A decade across silicon, validation & research"
+    lead="From AI inference accelerators to next-generation CPU cores, with nationally funded research in between."
+  />
+
+  <ol class="timeline">
+    {
+      experience.map((role) => (
+        <li class="timeline-item reveal">
+          <div class="marker" aria-hidden="true" />
+          <div class="t-content">
+            <div class="role-head">
+              <h2>{role.company}</h2>
+              <span class="role-period">{role.period}</span>
+            </div>
+            <p class="role-title">{role.title}{role.team ? ` \u00b7 ${role.team}` : ""}</p>
+            <p class="role-location text-muted">{role.location}</p>
+            <p class="role-summary">{role.summary}</p>
+            <ul class="role-points">
+              {role.points.map((point) => <li>{point}</li>)}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</BaseLayout>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(var(--accent), var(--line));
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 2.5rem;
+    padding-bottom: 2.75rem;
+  }
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+  .marker {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 3px solid var(--accent);
+  }
+  .role-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .role-head h2 {
+    font-size: 1.35rem;
+  }
+  .role-period {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    white-space: nowrap;
+  }
+  .role-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--graphite);
+    margin-top: 0.35rem;
+  }
+  .role-location {
+    font-size: 0.92rem;
+    margin-top: 0.15rem;
+  }
+  .role-summary {
+    margin-top: 0.85rem;
+    color: var(--ink);
+  }
+  .role-points {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding-left: 0;
+    list-style: none;
+  }
+  .role-points li {
+    position: relative;
+    padding-left: 1.4rem;
+    line-height: 1.6;
+  }
+  .role-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+</style>

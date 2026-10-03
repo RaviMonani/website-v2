@@ -1,0 +1,457 @@
+/* ============================================================
+   Design tokens - "Editorial Top-Nav" theme
+   ============================================================ */
+:root {
+  /* Neutrals */
+  --ink: #14181d;
+  --ink-soft: #2b3138;
+  --graphite: #3c454e;
+  --muted: #66707a;
+  --line: #e6e3da;
+  --line-soft: #efece4;
+  --paper: #f6f4ee;
+  --paper-2: #fcfbf7;
+  --white: #ffffff;
+
+  /* Dark panel (nav overlay, CTA bands) */
+  --panel: #14181d;
+  --panel-2: #1c2127;
+  --panel-text: #c6cdd4;
+  --panel-muted: #8b949d;
+  --panel-line: rgba(255, 255, 255, 0.08);
+
+  /* Accent - deep teal */
+  --accent: #0f7d72;
+  --accent-strong: #0b5f56;
+  --accent-bright: #14a093;
+  --accent-soft: #dcefec;
+  --accent-tint: #eef7f5;
+
+  /* Typography */
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Layout */
+  --maxw: 1180px;
+  --page-pad-x: clamp(1.5rem, 4vw, 3.5rem);
+  --page-pad-y: clamp(2.5rem, 5vw, 4.5rem);
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow-sm: 0 1px 2px rgba(20, 24, 29, 0.06), 0 4px 14px rgba(20, 24, 29, 0.05);
+  --shadow-md: 0 12px 34px rgba(20, 24, 29, 0.10);
+  --shadow-lg: 0 28px 70px rgba(20, 24, 29, 0.18);
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Display type (big, confident headlines) */
+  --display-xl: clamp(2.6rem, 6vw, 4.4rem);
+}
+
+/* ============================================================
+   Reset / base
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background-color: var(--paper);
+  line-height: 1.65;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img,
+picture,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: var(--accent-strong);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover {
+  color: var(--accent);
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+h1 {
+  font-size: clamp(2.2rem, 4.4vw, 3.2rem);
+}
+h2 {
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+}
+h3 {
+  font-size: 1.2rem;
+}
+ul {
+  padding-left: 1.1rem;
+}
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* ============================================================
+   Page shell - top nav + full-width scrolling content
+   ============================================================ */
+.page {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: var(--page-pad-y) var(--page-pad-x);
+}
+
+/* ============================================================
+   Full-bleed "breakout" sections
+   Lets a section escape .page's centered max-width column and
+   span the full width of the viewport, at any breakpoint.
+   ============================================================ */
+.breakout {
+  --gutter: max(0px, (100vw - var(--maxw)) / 2);
+  margin-inline: calc(-1 * (var(--page-pad-x) + var(--gutter)));
+}
+.breakout-inner {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--page-pad-x);
+}
+.panel-section {
+  background: var(--panel);
+  color: #e7eef0;
+}
+.panel-section .eyebrow {
+  color: var(--accent-bright);
+}
+.panel-section .eyebrow::before {
+  background: var(--accent-bright);
+}
+.panel-section h2,
+.panel-section h3 {
+  color: #fff;
+}
+.panel-section .text-muted,
+.panel-section p {
+  color: #b4c2c4;
+}
+.panel-section a:not(.btn) {
+  color: var(--accent-bright);
+}
+.panel-section a:not(.btn):hover {
+  color: #fff;
+}
+
+.section {
+  margin-top: clamp(2.75rem, 5vw, 4rem);
+}
+.section:first-of-type {
+  margin-top: 0;
+}
+
+/* ============================================================
+   Page hero - headline + lead + generated visual, used atop
+   pages that have an approved soft-glass hero image (Research,
+   Projects, Mentoring & Service).
+   ============================================================ */
+.page-hero {
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+}
+.page-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.page-hero-text h1 {
+  margin-top: 0.6rem;
+  max-width: 20ch;
+}
+.page-hero-text .lead {
+  margin-top: 1.1rem;
+}
+.page-hero-visual img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+@media (max-width: 860px) {
+  .page-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Shared typographic blocks
+   ============================================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  margin-bottom: 0.85rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+}
+.lead {
+  font-size: 1.16rem;
+  color: var(--graphite);
+  max-width: 62ch;
+}
+.display-xl {
+  font-size: var(--display-xl);
+  letter-spacing: -0.02em;
+}
+.text-muted {
+  color: var(--muted);
+}
+.section-head {
+  margin-bottom: 2rem;
+  max-width: 64ch;
+}
+.section-head .lead {
+  margin-top: 0.65rem;
+}
+.section-head--row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: none;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.96rem;
+}
+.text-link::after {
+  content: "\2192";
+  transition: transform var(--transition);
+}
+.text-link:hover::after {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.78rem 1.4rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+  background: var(--accent-strong);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border-color: var(--line);
+}
+.btn-ghost:hover {
+  border-color: var(--ink-soft);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Cards + grids
+   ============================================================ */
+.grid {
+  display: grid;
+  gap: 1.1rem;
+}
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 720px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: #d8d2c4;
+}
+
+/* Chips */
+.chip {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: var(--accent-tint);
+  color: var(--accent-strong);
+  border: 1px solid var(--accent-soft);
+}
+.chip-neutral {
+  background: #eef0ec;
+  color: var(--graphite);
+  border-color: var(--line);
+}
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--white);
+  padding: 0.75rem 1.25rem;
+  z-index: 300;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus {
+  left: 0;
+  color: var(--white);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Reveal-on-scroll
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease, transform 600ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Subtle cascade for grouped reveals - siblings fade in slightly
+   staggered rather than popping in all at once. */
+.reveal:nth-child(1) { --reveal-delay: 0ms; }
+.reveal:nth-child(2) { --reveal-delay: 80ms; }
+.reveal:nth-child(3) { --reveal-delay: 160ms; }
+.reveal:nth-child(4) { --reveal-delay: 240ms; }
+.reveal:nth-child(5) { --reveal-delay: 320ms; }
+.reveal:nth-child(n+6) { --reveal-delay: 380ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0ms !important;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   Content footer (inside main column)
+   ============================================================ */
+.content-footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--line);
+  padding: 1.75rem clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: var(--maxw);
+  margin-inline: auto;
+  width: 100%;
+}

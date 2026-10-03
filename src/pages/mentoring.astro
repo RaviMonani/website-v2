@@ -1,0 +1,192 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { mentoringStats, peerReview, serviceRoles } from "../data/resume";
+import mentoringVisual from "../assets/soft-mentoring-visual.png";
+
+const groups = [
+  { eyebrow: "Peer review", heading: "Journal & conference reviewing", items: peerReview },
+  { eyebrow: "Service", heading: "Advisory roles & mentorship", items: serviceRoles },
+];
+---
+
+<BaseLayout
+  title="Mentoring & Service"
+  description="Mentoring and professional service by Ravi Monani - IEEE peer review, program committees, advisory councils, and student mentorship."
+>
+  <section class="section page-hero breakout">
+    <div class="breakout-inner page-hero-grid">
+      <div class="page-hero-text">
+        <span class="eyebrow">Mentoring & Service</span>
+        <h1>Giving back to the community</h1>
+        <p class="lead">
+          Peer review, program committees, university advisory work, and mentoring the next
+          generation of engineers.
+        </p>
+      </div>
+      <div class="page-hero-visual reveal">
+        <Image
+          src={mentoringVisual}
+          alt=""
+          widths={[480, 760, 1040]}
+          sizes="(max-width: 860px) 90vw, 540px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="stat-band reveal">
+    {
+      mentoringStats.map((s) => (
+        <div class="stat">
+          <span class="stat-value">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))
+    }
+  </section>
+
+  {
+    groups.map((group) => (
+      <section class="section">
+        <div class="section-head">
+          <span class="eyebrow">{group.eyebrow}</span>
+          <h2>{group.heading}</h2>
+        </div>
+        <div class="service-list">
+          {group.items.map((item) => (
+            <article class="service-item reveal">
+              <div class="service-head">
+                <h3>{item.title}</h3>
+                <span class="service-date">{item.date}</span>
+              </div>
+              <p class="service-org">{item.org}</p>
+              <p class="text-muted">{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section">
+    <div class="cta reveal">
+      <div>
+        <span class="eyebrow eyebrow-light">Free mentorship</span>
+        <h2>Looking for guidance?</h2>
+        <p>
+          I mentor students and early-career engineers at no cost. Book a session and let's talk
+          about your goals in silicon, security, or research.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/contact">Book a session</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stat-band {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: 1.75rem;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .stat-value {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    color: var(--accent-strong);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .service-item {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .service-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
+  }
+  .service-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .service-head h3 {
+    font-size: 1.1rem;
+  }
+  .service-date {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    white-space: nowrap;
+  }
+  .service-org {
+    color: var(--graphite);
+    font-weight: 500;
+    font-size: 0.94rem;
+    margin-block: 0.35rem 0.6rem;
+  }
+
+  .cta {
+    background:
+      radial-gradient(560px 280px at 88% 8%, rgba(20, 160, 147, 0.32), transparent 62%),
+      var(--panel);
+    color: #e7eef0;
+    border-radius: calc(var(--radius) + 4px);
+    padding: clamp(1.9rem, 4vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    box-shadow: var(--shadow-lg);
+  }
+  .cta h2 {
+    color: #fff;
+  }
+  .cta p {
+    color: #b4c2c4;
+    margin-top: 0.75rem;
+    max-width: 52ch;
+  }
+  .eyebrow-light {
+    color: var(--accent-bright);
+  }
+  .eyebrow-light::before {
+    background: var(--accent-bright);
+  }
+  @media (max-width: 720px) {
+    .stat-band {
+      grid-template-columns: 1fr;
+    }
+    .cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

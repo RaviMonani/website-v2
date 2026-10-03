@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { featured } from "../data/resume";
+---
+
+<BaseLayout
+  title="Featured"
+  description="Media coverage, interviews, and recognition featuring Ravi Monani's work in hardware security and secure low-power systems."
+>
+  <PageHeader
+    eyebrow="Featured"
+    title="Media, interviews & recognition"
+    lead="Selected coverage of my research and work in hardware security and secure, low-power systems."
+  />
+
+  <div class="feature-list">
+    {
+      featured.map((m) => (
+        <article class="feature-item reveal">
+          <div class="feature-meta">
+            <span class="feature-outlet">{m.outlet}</span>
+            <span class="feature-date">{m.date}</span>
+          </div>
+          <h2>
+            {m.url ? (
+              <a href={m.url} target="_blank" rel="noopener">
+                {m.title}
+              </a>
+            ) : (
+              m.title
+            )}
+          </h2>
+          <p class="text-muted">{m.description}</p>
+          {m.url && (
+            <a class="text-link feature-link" href={m.url} target="_blank" rel="noopener">
+              Read the feature
+            </a>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .feature-item {
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .feature-item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .feature-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .feature-outlet {
+    font-weight: 600;
+    color: var(--accent-strong);
+    font-size: 0.9rem;
+  }
+  .feature-date {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .feature-item h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .feature-item h2 a {
+    color: var(--ink);
+  }
+  .feature-item h2 a:hover {
+    color: var(--accent-strong);
+  }
+  .feature-link {
+    margin-top: 0.85rem;
+  }
+</style>

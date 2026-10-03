@@ -1,0 +1,193 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { site, bio, education, skillGroups, interests, focusAreas } from "../data/resume";
+---
+
+<BaseLayout
+  title="About"
+  description="About Ravi Monani - system design engineer, IEEE Senior Member, and hardware security researcher."
+>
+  <PageHeader
+    eyebrow="About"
+    title="From chaos theory to silicon cores"
+    lead="Bridging industry engineering and academic research in processor design and hardware security."
+  />
+
+  <section class="intro reveal">
+    <img class="portrait" src={site.photo} alt={site.name} width="200" height="240" />
+    <div class="intro-bio">
+      {bio.map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">What I do</span>
+      <h2>Areas of focus</h2>
+    </div>
+    <div class="grid grid-2">
+      {
+        focusAreas.map((f) => (
+          <article class="card reveal">
+            <h3>{f.title}</h3>
+            <p class="text-muted">{f.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Education</span>
+      <h2>Academic background</h2>
+    </div>
+    <div class="edu-list">
+      {
+        education.map((e) => (
+          <article class="edu-item reveal">
+            <div class="edu-year">{e.year}</div>
+            <div>
+              <h3>{e.degree}</h3>
+              <p class="edu-school">{e.school}</p>
+              <p class="text-muted">{e.detail} &middot; {e.location}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Capabilities</span>
+      <h2>Technical skills</h2>
+    </div>
+    <div class="grid grid-3">
+      {
+        skillGroups.map((group) => (
+          <article class="card reveal">
+            <h3 class="skill-title">{group.title}</h3>
+            <div class="chip-row">
+              {group.items.map((item) => <span class="chip chip-neutral">{item}</span>)}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Interests</span>
+      <h2>What keeps me curious</h2>
+    </div>
+    <ul class="interest-list">
+      {interests.map((item) => <li class="reveal">{item}</li>)}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .portrait {
+    width: 200px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+  }
+  .intro-bio {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .intro-bio p {
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .edu-item:hover {
+    border-color: var(--accent-soft);
+    transform: translateX(4px);
+  }
+  .edu-year {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    color: var(--accent-strong);
+    font-size: 1.15rem;
+  }
+  .edu-school {
+    color: var(--accent-strong);
+    font-weight: 500;
+    margin-top: 0.2rem;
+  }
+  .skill-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .interest-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem 1.5rem;
+  }
+  .interest-list li {
+    position: relative;
+    padding-left: 1.6rem;
+    font-size: 1.04rem;
+  }
+  .interest-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    transform: rotate(45deg);
+    background: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .intro {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      width: 160px;
+      height: 192px;
+    }
+    .interest-list {
+      grid-template-columns: 1fr;
+    }
+    .edu-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

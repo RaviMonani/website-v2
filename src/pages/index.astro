@@ -1,0 +1,549 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  site,
+  contact,
+  stats,
+  focusAreas,
+  experience,
+  projects,
+  externalPublications,
+  researchSummary,
+} from "../data/resume";
+import heroGradient from "../assets/soft-hero-gradient.png";
+import featureOrb from "../assets/soft-feature-orb.png";
+
+const security = focusAreas.find((f) => f.title === "Hardware Security") ?? focusAreas[1];
+
+const sections = [
+  { label: "About", href: "/about", desc: "Background, education & skills" },
+  { label: "Experience", href: "/experience", desc: "Roles across silicon & validation" },
+  { label: "Research", href: "/research", desc: "Low-power hardware security" },
+  { label: "Publications", href: "/publications", desc: "Peer-reviewed papers & talks" },
+  { label: "Projects", href: "/projects", desc: "Automation, silicon & ML work" },
+  { label: "Achievements", href: "/achievements", desc: "Awards, honors & memberships" },
+  { label: "Featured", href: "/featured", desc: "Media, interviews & recognition" },
+  { label: "Mentoring & Service", href: "/mentoring", desc: "Peer review & advising" },
+];
+---
+
+<BaseLayout>
+  <!-- Hero: full-bleed image backdrop -->
+  <section class="hero breakout">
+    <div class="hero-bg">
+      <Image
+        src={heroGradient}
+        alt=""
+        widths={[640, 1200, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="hero-scrim"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">{site.role}</span>
+      <h1>Engineering performance &amp; security into modern processors.</h1>
+      <p class="lead">{site.shortBio}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/experience">Explore my work</a>
+        <a class="btn btn-ghost" href="/contact">Book a free session</a>
+      </div>
+      <p class="hero-meta">
+        <span>{contact.location}</span>
+        <span aria-hidden="true">&middot;</span>
+        <a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href={contact.googleScholar} target="_blank" rel="noopener">Google Scholar</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section stat-strip">
+    {
+      stats.map((s) => (
+        <div class="stat reveal">
+          <span class="stat-value">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))
+    }
+  </section>
+
+  <!-- Site map / bird's-eye -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Overview</span>
+      <h2>Everything in one place</h2>
+      <p class="lead">A complete view of my work - jump straight to what interests you.</p>
+    </div>
+    <div class="map-grid">
+      {
+        sections.map((s, i) => (
+          <a class="map-card reveal" href={s.href}>
+            <span class="map-index">{String(i + 1).padStart(2, "0")}</span>
+            <span class="map-label">{s.label}</span>
+            <span class="map-desc">{s.desc}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Feature: Security -->
+  <section class="section breakout feature">
+    <div class="breakout-inner feature-grid">
+      <div class="feature-text">
+        <span class="eyebrow">Security</span>
+        <h2>Hardware security, from mitigation to release</h2>
+        <p class="lead">{security.body}</p>
+        <a class="text-link" href="/experience">See the work</a>
+      </div>
+      <div class="feature-visual reveal">
+        <Image
+          src={featureOrb}
+          alt=""
+          widths={[480, 760, 1040]}
+          sizes="(max-width: 860px) 90vw, 520px"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Research (dark panel) -->
+  <section class="section breakout panel-section feature feature--reverse">
+    <div class="breakout-inner feature-grid">
+      <div class="feature-visual reveal">
+        <Image
+          src={featureOrb}
+          alt=""
+          widths={[480, 760, 1040]}
+          sizes="(max-width: 860px) 90vw, 520px"
+        />
+      </div>
+      <div class="feature-text">
+        <span class="eyebrow">Research</span>
+        <h2>Research in secure, low-power hardware</h2>
+        <p class="lead">{researchSummary}</p>
+        <a class="text-link" href="/research">Explore the research</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Focus areas -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">What I do</span>
+      <h2>Areas of focus</h2>
+    </div>
+    <div class="grid grid-2">
+      {
+        focusAreas.map((f) => (
+          <article class="card reveal">
+            <h3>{f.title}</h3>
+            <p class="text-muted">{f.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Current role highlight -->
+  <section class="section">
+    <div class="section-head section-head--row">
+      <div>
+        <span class="eyebrow">Now</span>
+        <h2>Current role</h2>
+      </div>
+      <a class="text-link" href="/experience">Full experience</a>
+    </div>
+    <article class="now-card reveal">
+      <div class="now-head">
+        <h3>{experience[0].company}</h3>
+        <span class="now-period">{experience[0].period}</span>
+      </div>
+      <p class="now-title">{experience[0].title} &middot; {experience[0].team}</p>
+      <p class="text-muted">{experience[0].summary}</p>
+    </article>
+  </section>
+
+  <!-- Selected projects -->
+  <section class="section">
+    <div class="section-head section-head--row">
+      <div>
+        <span class="eyebrow">Selected work</span>
+        <h2>Featured projects</h2>
+      </div>
+      <a class="text-link" href="/projects">All projects</a>
+    </div>
+    <div class="grid grid-3">
+      {
+        projects.slice(0, 3).map((p) => (
+          <article class="card reveal">
+            <span class="chip">{p.category}</span>
+            <h3 class="proj-title">{p.title}</h3>
+            <p class="text-muted proj-impact">{p.impact[0]}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Recent publications -->
+  <section class="section">
+    <div class="section-head section-head--row">
+      <div>
+        <span class="eyebrow">Research</span>
+        <h2>Recent publications</h2>
+      </div>
+      <a class="text-link" href="/publications">All publications</a>
+    </div>
+    <ul class="pub-list">
+      {
+        externalPublications.slice(0, 3).map((p) => (
+          <li class="pub-item reveal">
+            <span class="pub-date">{p.date}</span>
+            <div>
+              <h3>{p.title}</h3>
+              <p class="text-muted">{p.venue}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- CTA -->
+  <section class="section breakout panel-section cta-band">
+    <div class="breakout-inner cta-inner">
+      <div class="section-head">
+        <span class="eyebrow">Free mentorship</span>
+        <h2>Let's talk silicon, security &amp; careers</h2>
+        <p class="lead">
+          I offer free mentorship sessions for students and early-career engineers exploring
+          processor architecture, hardware security, validation, and research.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/contact">Book an appointment</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero: full-bleed image backdrop */
+  .hero {
+    position: relative;
+    min-height: 84vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .hero-bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(13, 20, 19, 0.18) 0%, rgba(13, 20, 19, 0.74) 100%);
+  }
+  .hero-content {
+    color: #fff;
+    max-width: 46rem;
+    padding: 0 1.5rem;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9fe8de;
+    margin-bottom: 1.25rem;
+  }
+  .hero-content h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #fff;
+    max-width: 20ch;
+    margin-inline: auto;
+  }
+  .hero-content .lead {
+    margin-top: 1.5rem;
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    color: #e3ebe9;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+  .hero-actions {
+    margin-top: 2.25rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero .btn-ghost {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+  }
+  .hero .btn-ghost:hover {
+    border-color: #fff;
+    color: #fff;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.9rem;
+    color: #c3d1cf;
+    font-size: 0.92rem;
+  }
+  .hero-meta a {
+    color: #e3ebe9;
+  }
+  .hero-meta a:hover {
+    color: #fff;
+  }
+
+  /* Stats */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+    text-align: center;
+    padding-block: 2.75rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 4vw, 2.9rem);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  /* Site map - quiet editorial index, not boxed cards */
+  .map-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .map-card {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.85rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    transition: color var(--transition), padding-left var(--transition);
+  }
+  .map-card:nth-child(odd) {
+    padding-right: 1.5rem;
+    border-right: 1px solid var(--line);
+  }
+  .map-card:nth-child(even) {
+    padding-left: 1.5rem;
+  }
+  .map-card:hover {
+    color: var(--ink);
+    padding-left: 0.4rem;
+  }
+  .map-card:nth-child(even):hover {
+    padding-left: 1.9rem;
+  }
+  .map-card:hover .map-label {
+    color: var(--accent-strong);
+  }
+  .map-index {
+    grid-row: 1 / 3;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    align-self: center;
+  }
+  .map-label {
+    grid-column: 2;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color var(--transition);
+  }
+  .map-desc {
+    grid-column: 2;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  @media (max-width: 540px) {
+    .map-desc {
+      display: none;
+    }
+  }
+
+  /* Feature sections (alternating image/text) */
+  .feature {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .feature-text h2 {
+    margin-block: 0.6rem 1.1rem;
+    max-width: 18ch;
+  }
+  .feature-text .text-link {
+    margin-top: 1.4rem;
+  }
+  .feature-visual :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .proj-title {
+    margin-top: 0.85rem;
+    font-size: 1.1rem;
+  }
+  .proj-impact {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .now-card {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+  }
+  .now-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .now-period {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+  }
+  .now-title {
+    color: var(--graphite);
+    font-weight: 600;
+    margin-block: 0.35rem 0.6rem;
+  }
+
+  /* Publications */
+  .pub-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .pub-item {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.25rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .pub-item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .pub-date {
+    color: var(--accent-strong);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding-top: 0.15rem;
+  }
+  .pub-item h3 {
+    font-size: 1.08rem;
+  }
+
+  /* CTA band (dark, full-bleed) */
+  .cta-band {
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    text-align: left;
+  }
+  .cta-inner .section-head {
+    margin-bottom: 0;
+    text-align: left;
+  }
+  .cta-inner .lead {
+    margin-top: 0.75rem;
+  }
+  .cta-inner .btn {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 960px) {
+    .stat-strip {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .stat-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .map-grid {
+      grid-template-columns: 1fr;
+    }
+    .map-card:nth-child(odd) {
+      padding-right: 0;
+      border-right: none;
+    }
+    .map-card:nth-child(even) {
+      padding-left: 0;
+    }
+    .cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+</style>

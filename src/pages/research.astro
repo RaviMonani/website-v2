@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { researchSummary, researchAreas, contact } from "../data/resume";
+import researchVisual from "../assets/soft-research-visual.png";
+---
+
+<BaseLayout
+  title="Research"
+  description="Research by Ravi Monani on chaos-based encryption, low-power CMOS and FPGA design, and secure communication for constrained devices."
+>
+  <section class="section page-hero breakout">
+    <div class="breakout-inner page-hero-grid">
+      <div class="page-hero-text">
+        <span class="eyebrow">Research</span>
+        <h1>Securing the smallest devices</h1>
+        <p class="lead">
+          Nationally funded research bringing practical, low-power security to constrained IoT
+          and wearable hardware.
+        </p>
+      </div>
+      <div class="page-hero-visual reveal">
+        <Image
+          src={researchVisual}
+          alt=""
+          widths={[480, 760, 1040]}
+          sizes="(max-width: 860px) 90vw, 540px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="research-intro reveal">
+    <p class="lead">{researchSummary}</p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Focus</span>
+      <h2>Research areas</h2>
+    </div>
+    <div class="grid grid-3">
+      {
+        researchAreas.map((area) => (
+          <article class="card reveal">
+            <h3>{area.title}</h3>
+            <p class="text-muted">{area.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grant-card reveal">
+      <div>
+        <span class="eyebrow eyebrow-light">Funding</span>
+        <h2>Nationally funded research</h2>
+        <p>
+          Selected as a graduate research assistant on a project advancing efficient, reliable, and
+          secure chaotic communication for wearable devices - supported by a national research grant
+          of approximately $300,000.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head section-head--row">
+      <div>
+        <span class="eyebrow">Output</span>
+        <h2>Publications &amp; talks</h2>
+      </div>
+      <a class="text-link" href="/publications">View all</a>
+    </div>
+    <p class="lead">
+      My research has produced peer-reviewed journal and conference papers, a master's thesis, and
+      conference presentations. The full list - including industry technical papers - lives on the
+      <a href="/publications">Publications</a> page, and the complete record with citations is on
+      <a href={contact.googleScholar} target="_blank" rel="noopener">Google Scholar</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .research-intro .lead {
+    font-size: 1.25rem;
+    color: var(--ink);
+    max-width: 70ch;
+  }
+  .grant-card {
+    background: var(--panel);
+    color: #e7eef0;
+    border-radius: var(--radius);
+    padding: clamp(1.9rem, 4vw, 2.75rem);
+    box-shadow: var(--shadow-lg);
+  }
+  .grant-card h2 {
+    color: #fff;
+  }
+  .grant-card p {
+    color: #b4c2c4;
+    margin-top: 0.75rem;
+    max-width: 60ch;
+  }
+  .eyebrow-light {
+    color: var(--accent-bright);
+  }
+  .eyebrow-light::before {
+    background: var(--accent-bright);
+  }
+</style>
