@@ -51,7 +51,15 @@ import { site, bio, education, skillGroups, interests, focusAreas } from "../dat
             <div>
               <h3>{e.degree}</h3>
               <p class="edu-school">{e.school}</p>
-              <p class="text-muted">{e.detail} &middot; {e.location}</p>
+              <p class="text-muted">
+                {e.detail ? (
+                  <>
+                    {e.detail} &middot; {e.location}
+                  </>
+                ) : (
+                  e.location
+                )}
+              </p>
             </div>
           </article>
         ))
