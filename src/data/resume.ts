@@ -202,6 +202,7 @@ export const education: Education[] = [
   {
     school: "California State University, Long Beach",
     degree: "M.S. in Electrical Engineering",
+    detail: "",
     location: "Long Beach, CA",
     year: "2022",
   },
