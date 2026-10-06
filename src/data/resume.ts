@@ -202,14 +202,12 @@ export const education: Education[] = [
   {
     school: "California State University, Long Beach",
     degree: "M.S. in Electrical Engineering",
-    detail: "GPA 3.625 / 4",
     location: "Long Beach, CA",
     year: "2022",
   },
   {
     school: "Nirma University",
     degree: "M.Tech in ECE - Embedded Systems",
-    detail: "CPI 9.09 / 10 - Gold Medalist (1st position)",
     location: "Ahmedabad, IN",
     year: "2018",
   },
